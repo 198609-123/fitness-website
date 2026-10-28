@@ -1,0 +1,50 @@
+{
+  "intro": "以下为常见外卖食物的卡路里参考值（按常见份量估算）",
+  "categories": [
+    {
+      "name": "西式快餐",
+      "emoji": "🍟",
+      "foods": [
+        { "name": "汉堡", "calories": 500, "note": "约1个", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=hamburger%20with%20beef%20and%20vegetables&image_size=square" },
+        { "name": "薯条(中份)", "calories": 400, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=french%20fries%20golden%20crispy&image_size=square" },
+        { "name": "炸鸡(1块)", "calories": 250, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20chicken%20crispy%20golden&image_size=square" },
+        { "name": "披萨(1片)", "calories": 285, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pizza%20slice%20cheese%20pepperoni&image_size=square" }
+      ]
+    },
+    {
+      "name": "中式快餐",
+      "emoji": "🍚",
+      "foods": [
+        { "name": "蛋炒饭", "calories": 350, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20rice%20chinese%20food&image_size=square" },
+        { "name": "牛肉面", "calories": 450, "note": "约300g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese%20noodles%20beef%20tasty&image_size=square" },
+        { "name": "煎饺(6个)", "calories": 240, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20dumplings%20chinese%20food&image_size=square" },
+        { "name": "馄饨(10个)", "calories": 280, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=wonton%20soup%20chinese%20food&image_size=square" }
+      ]
+    },
+    {
+      "name": "日料寿司",
+      "emoji": "🍣",
+      "foods": [
+        { "name": "寿司(10个)", "calories": 300, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sushi%20roll%20salmon%20fresh&image_size=square" },
+        { "name": "刺身拼盘", "calories": 200, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sashimi%20fresh%20fish&image_size=square" },
+        { "name": "天妇罗(5个)", "calories": 350, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tempura%20shrimp%20fried&image_size=square" }
+      ]
+    },
+    {
+      "name": "饮品甜品",
+      "emoji": "🧋",
+      "foods": [
+        { "name": "奶茶(中杯)", "calories": 350, "note": "约500ml", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20tea%20bubble%20tea%20cup&image_size=square" },
+        { "name": "可乐(中杯)", "calories": 180, "note": "约500ml", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cola%20drink%20glass&image_size=square" },
+        { "name": "冰淇淋(1球)", "calories": 150, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ice%20cream%20cone%20sweet&image_size=square" }
+      ]
+    }
+  ],
+  "tips": [
+    "尽量选择清蒸、水煮、烤制的食物，避免油炸和红烧",
+    "点餐时备注\"少盐少糖少油\"",
+    "饮品选择无糖或低糖版本",
+    "主食可以选择杂粮饭代替白米饭",
+    "多搭配蔬菜沙拉，增加饱腹感"
+  ]
+}

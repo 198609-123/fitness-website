@@ -1,0 +1,176 @@
+{# index.html —— 减脂计算器页（继承母版） #}
+{# 关键变化（对应你列的“优先级 1：HTML 写死在 Python 里”）：
+   之前 Python 用 f-string 拼一大坨结果 HTML；现在 Python 只算“数据”（result_data 字典），
+   这块模板负责把数据“画”成卡片。视图（HTML）和数据（字典）彻底分离。 #}
+{% extends "base.html" %}
+
+{% block title %}减脂计算器{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <a href="/" class="back-btn">← 返回首页</a>
+        <h1>减脂计算器</h1>
+    </header>
+
+    <div class="form-container">
+        <!-- 表单提交到本页（/calculator，POST）。method=POST 才会触发计算 -->
+        <form method="POST">
+            <div class="form-group">
+                <label>计算器类型</label>
+                <select name="calculator_type" id="calc_type">
+                    <option value="52">5+2 断食法</option>
+                    <option value="carbon">碳循环减脂法</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>性别</label>
+                <select name="gender">
+                    <option value="男">男</option>
+                    <option value="女">女</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>体重（kg）</label>
+                <input type="number" step="0.1" name="weight" required>
+            </div>
+            <div class="form-group">
+                <label>身高（cm）</label>
+                <input type="number" step="0.1" name="height" required>
+            </div>
+            <div class="form-group">
+                <label>年龄</label>
+                <input type="number" name="age" required>
+            </div>
+            <div class="form-group">
+                <label>活动水平</label>
+                <select name="activity_level">
+                    <option value="1">久坐型</option>
+                    <option value="2">轻度活动（每周1-3次）</option>
+                    <option value="3">中度活动（每周3-5次）</option>
+                    <option value="4">高度活动（每周3-5次）</option>
+                </select>
+            </div>
+
+            <!-- 碳循环专属的高级选项：默认隐藏，选了“碳循环”才显示（见底部脚本） -->
+            <div class="advanced-options" id="carbon_options" style="display:none;">
+                <h4>碳循环设置</h4>
+                <div class="form-group">
+                    <label>循环模式</label>
+                    <div class="radio-group">
+                        <div class="radio-item"><input type="radio" name="cycle_mode" value="1" checked><label>3+1+1 5天循环（新手首选）</label></div>
+                        <div class="radio-item"><input type="radio" name="cycle_mode" value="2"><label>经典7天循环（有基础者）</label></div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>蛋白质标准</label>
+                    <div class="radio-group">
+                        <div class="radio-item"><input type="radio" name="protein_level" value="1.8"><label>1.8g/kg</label></div>
+                        <div class="radio-item"><input type="radio" name="protein_level" value="2.0" checked><label>2.0g/kg</label></div>
+                        <div class="radio-item"><input type="radio" name="protein_level" value="2.2"><label>2.2g/kg</label></div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit">计算</button>
+        </form>
+    </div>
+
+    <!-- 结果区：根据 app.py 传来的 result_data 渲染（不再用 {{ result|safe }}） -->
+    <div class="result-container">
+        {% if error_msg %}
+            <div class="result-card error"><h3>❌ {{ error_msg }}</h3></div>
+
+        {% elif result_data and result_data.plan_type == "52" %}
+            {# ---------- 5+2 断食法结果 ---------- #}
+            <div class="result-card">
+                <h3>📊 基础代谢数据</h3>
+                <p>基础代谢率（BMR）：<strong>{{ result_data.bmr }}</strong> 大卡/天</p>
+                <p>每日总消耗（TDEE）：<strong>{{ result_data.tdee }}</strong> 大卡/天</p>
+            </div>
+            <div class="result-card">
+                <h3>📅 5+2 断食法 每日热量计划</h3>
+                <div class="plan-item normal">
+                    <h4>✅ 正常日（每周5天）</h4>
+                    <p>推荐摄入：<strong>{{ result_data.normal_day_min }} - {{ result_data.normal_day_max }}</strong> 大卡</p>
+                    <p>（维持热量上下浮动100大卡，避免暴饮暴食）</p>
+                </div>
+                <div class="plan-item fasting">
+                    <h4>❌ 断食日（每周2天，必须非连续）</h4>
+                    <p>新手简化版（创始人推荐）：<strong>{{ result_data.fasting_simple }}</strong> 大卡/天</p>
+                    <p>个性化精准版：<strong>{{ result_data.fasting_precise_min }} - {{ result_data.fasting_precise_max }}</strong> 大卡/天</p>
+                </div>
+            </div>
+            <div class="result-card warning">
+                <h3>⚠️ 重要安全提醒</h3>
+                <p>1. 断食日热量绝对不能低于 <strong>{{ result_data.safety_floor }}</strong> 大卡</p>
+                <p>2. 低于安全底线会导致肌肉流失、代谢下降、月经紊乱</p>
+                <p>3. 断食日必须间隔开，不要连续两天断食</p>
+            </div>
+
+        {% elif result_data and result_data.plan_type == "carbon" %}
+            {# ---------- 碳循环减脂法结果 ---------- #}
+            <div class="result-card">
+                <h3>📊 基础代谢数据</h3>
+                <p>基础代谢率（BMR）：<strong>{{ result_data.bmr }}</strong> 大卡/天</p>
+                <p>每日总消耗（TDEE）：<strong>{{ result_data.tdee }}</strong> 大卡/天</p>
+            </div>
+            <div class="result-card">
+                <h3>🥩 固定宏量营养素（全程不变）</h3>
+                <p>蛋白质：<strong>{{ result_data.protein_g }}g</strong>/天（{{ result_data.protein_kcal }}大卡）</p>
+                <p>标准：{{ result_data.protein_level }}g/kg 体重</p>
+            </div>
+            <div class="result-card">
+                <h3>📅 各日宏量营养素分配</h3>
+                <div class="plan-item low">
+                    <h4>🔵 低碳日（休息日/低强度有氧）</h4>
+                    <p>碳水：{{ result_data.low_day.carbon_g }}g | 脂肪：{{ result_data.low_day.fat_g }}g</p>
+                    <p>总热量：<strong>{{ result_data.low_day.total }}</strong> 大卡（缺口≈{{ result_data.tdee - result_data.low_day.total }}大卡）</p>
+                </div>
+                <div class="plan-item mid">
+                    <h4>🟢 中碳日（小肌群训练）</h4>
+                    <p>碳水：{{ result_data.mid_day.carbon_g }}g | 脂肪：{{ result_data.mid_day.fat_g }}g</p>
+                    <p>总热量：<strong>{{ result_data.mid_day.total }}</strong> 大卡（缺口≈{{ result_data.tdee - result_data.mid_day.total }}大卡）</p>
+                </div>
+                <div class="plan-item high">
+                    <h4>🔴 高碳日（大肌群训练：腿/背/胸）</h4>
+                    <p>碳水：{{ result_data.high_day.carbon_g }}g | 脂肪：{{ result_data.high_day.fat_g }}g</p>
+                    <p>总热量：<strong>{{ result_data.high_day.total }}</strong> 大卡（缺口≈{{ result_data.tdee - result_data.high_day.total }}大卡）</p>
+                </div>
+            </div>
+            <div class="result-card">
+                <h3>📈 每周减脂效果预测（{{ result_data.cycle_name }}）</h3>
+                <p>每周总热量：<strong>{{ result_data.weekly_total }}</strong> 大卡</p>
+                <p>平均每日热量：<strong>{{ result_data.avg_daily }}</strong> 大卡</p>
+                <p>每周总热量缺口：<strong>{{ result_data.weekly_deficit }}</strong> 大卡</p>
+                <p>预计每周减脂：<strong>{{ result_data.weekly_fat_loss }}</strong> kg</p>
+            </div>
+            <div class="result-card warning">
+                <h3>⚠️ 关键执行要点</h3>
+                <p>1. 高碳日必须安排大重量力量训练</p>
+                <p>2. 碳水优先选择燕麦、糙米、红薯等复合碳水</p>
+                <p>3. 每天喝2-3L水，高碳日适当增加</p>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    // 这部分 JS 只管“表单交互”，和之前一样：
+    // 1) 根据首页传来的 type 自动选中对应计算器；2) 切换显示碳循环高级选项。
+    const calc = document.getElementById('calc_type');
+    const opts = document.getElementById('carbon_options');
+
+    // 自动选中从首页传过来的类型（default_type 由 app.py 传入）
+    const defaultType = "{{ default_type }}";
+    if (defaultType) { calc.value = defaultType; }
+
+    function updateOpts(){
+        opts.style.display = calc.value === 'carbon' ? 'block' : 'none';
+    }
+    updateOpts();
+    calc.addEventListener('change', updateOpts);
+</script>
+{% endblock %}

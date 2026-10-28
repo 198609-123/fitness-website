@@ -1,0 +1,39 @@
+{# food_calories.html —— 常见食物卡路里查询页（继承母版） #}
+{# 数据来自 app.py 传入的 data 变量（它读取 data/foods.json），这里只用循环渲染 #}
+{% extends "base.html" %}
+
+{% block title %}常见食物卡路里查询{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <!-- 返回首页链接统一用 .back-btn 样式（定义在 style.css） -->
+        <a href="/" class="back-btn">← 返回首页</a>
+        <h1>🍎 常见食物卡路里查询</h1>
+        <p>{{ data.intro }}</p>
+    </header>
+
+    {# 外层循环：遍历每个分类（主食类 / 蛋白质类 / 蔬菜类 ...） #}
+    {% for cat in data.categories %}
+    <div class="category">
+        <h2>{{ cat.emoji }} {{ cat.name }}</h2>
+        <div class="food-grid">
+            {# 内层循环：遍历该分类下的每种食物。
+               这里用 cat.foods 而非 cat.items —— 因为 Python 字典自带 .items() 方法，
+               Jinja 的“点语法”会优先取方法而不是我们的数据键，会报错。
+               所以 JSON 里这个键特意叫 "foods" 来避开冲突。 #}
+            {% for item in cat.foods %}
+            <div class="food-card">
+                <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image">
+                <div class="food-info">
+                    <div class="food-name">{{ item.name }}</div>
+                    <div class="food-calories">{{ item.calories }} <span>大卡</span></div>
+                    <div class="food-note">{{ item.note }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}

@@ -1,0 +1,243 @@
+/* ============================================================================
+ * style.css —— 全站公共样式（唯一一份）
+ * ----------------------------------------------------------------------------
+ * 作用：之前 4 个模板各自抄了一遍 body / .box / .btn / 卡片样式，
+ *       改一个颜色要改 4 个文件。现在全部抽到这里，模板里只写
+ *       <link rel="stylesheet" href="/static/css/style.css"> 即可。
+ * 好处：改样式只动这一处，全站生效（这就是“单一来源 / DRY 原则”）。
+ * ==========================================================================*/
+
+/* ---------- 1. 基础重置：清掉浏览器默认的外边距/内边距，统一盒模型 ---------- */
+* {
+    box-sizing: border-box;   /* 让 padding 和 border 算进元素宽度，布局更好算 */
+    margin: 0;
+    padding: 0;
+}
+
+/* ---------- 2. 页面背景与字体：全站统一（改背景色只改这里） ---------- */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); /* 紫蓝渐变 */
+    min-height: 100vh;
+    padding: 20px;
+    color: #333;
+}
+
+/* ---------- 3. 首页（.box）相关样式 ---------- */
+.box {
+    background: white;
+    max-width: 500px;
+    width: 100%;
+    border-radius: 16px;
+    padding: 40px 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    margin: 0 auto;          /* 水平居中 */
+}
+.box h1 { font-size: 28px; color: #333; margin-bottom: 10px; }
+.box p  { color: #666; margin-bottom: 35px; font-size: 16px; }
+
+/* 首页的大按钮（5+2、碳循环、食物查询、外卖查询） */
+.btn {
+    display: block;
+    width: 100%;
+    padding: 18px;
+    margin: 12px 0;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    text-decoration: none;   /* 去掉链接下划线 */
+    border-radius: 10px;
+    font-size: 18px;
+    font-weight: bold;
+    transition: 0.2s;        /* 悬停动画过渡 */
+}
+.btn:hover {
+    transform: translateY(-3px); /* 悬停时轻微上浮 */
+    box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+}
+
+/* ---------- 4. 通用容器与页头（食物页 / 外卖页 / 计算器页共用） ---------- */
+.container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+header h1 {
+    color: white;
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+header p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+}
+
+/* “← 返回首页”链接（之前每个页面手写，现在统一用 .back-btn 类） */
+.back-btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    transition: 0.2s;
+}
+.back-btn:hover { background: rgba(255, 255, 255, 0.3); }
+
+/* ---------- 5. 食物 / 外卖 卡片网格 ---------- */
+.category { margin-bottom: 30px; }
+.category h2 {
+    color: white;
+    font-size: 20px;
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid #ffd700;  /* 金色左边框做分类标识 */
+}
+.food-grid {
+    display: grid;  /* CSS Grid 自动换行铺卡片 */
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 15px;
+}
+.food-card {
+    background: white;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+    transition: 0.3s;
+}
+.food-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
+.food-image { width: 100%; height: 140px; object-fit: cover; } /* 图片裁剪填充 */
+.food-info { padding: 15px; text-align: center; }
+.food-name { font-size: 16px; font-weight: bold; color: #333; margin-bottom: 5px; }
+.food-calories { font-size: 20px; font-weight: bold; color: #e74c3c; } /* 热量用红色强调 */
+.food-calories span { font-size: 12px; color: #666; font-weight: normal; }
+.food-note { font-size: 12px; color: #888; margin-top: 5px; }
+
+/* ---------- 6. 外卖页底部的“减脂小贴士”卡片 ---------- */
+.tip-box {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 30px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+}
+.tip-box h3 { color: #e74c3c; margin-bottom: 10px; font-size: 18px; }
+.tip-box ul { color: #666; line-height: 1.8; padding-left: 20px; }
+
+/* ---------- 7. 计算器页表单样式 ---------- */
+.form-container { padding: 25px; background: white; border-radius: 15px; }
+.form-group { margin-bottom: 20px; }
+label { display: block; margin-bottom: 8px; font-weight: 500; }
+input, select {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    font-size: 16px;
+}
+.advanced-options {
+    background: #f8f9fa;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.radio-group { display: flex; gap: 15px; flex-wrap: wrap; }
+.radio-item { display: flex; align-items: center; gap: 5px; }
+button {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: bold;
+    cursor: pointer;  /* 鼠标变手型，提示可点击 */
+}
+
+/* ---------- 8. 计算器结果卡片（颜色标签用左边框区分不同类型） ---------- */
+.result-container { padding: 0 25px 25px; }
+.result-card {
+    background: #f8f9fa;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+}
+.plan-item { padding: 15px; border-radius: 8px; margin-bottom: 10px; }
+.normal   { background: #e8f5e9; border-left: 4px solid #4caf50; } /* 绿：正常日 */
+.fasting  { background: #fff3e0; border-left: 4px solid #ff9800; } /* 橙：断食日 */
+.low      { background: #e3f2fd; border-left: 4px solid #2196f3; } /* 蓝：低碳日 */
+.mid      { background: #e8f5e9; border-left: 4px solid #4caf50; } /* 绿：中碳日 */
+.high     { background: #ffebee; border-left: 4px solid #f44336; } /* 红：高碳日 */
+.warning  { background: #fff3e0; border-left: 4px solid #ff9800; } /* 橙：警告 */
+.error    { background: #ffebee; border-left: 4px solid #f44336; } /* 红：错误 */
+
+/* ---------- 9. AI 助手浮动组件（全站通过 base.html 自动加载） ---------- */
+.ai-fab {
+    position: fixed;          /* 固定在视窗右下角，滚动也不动 */
+    right: 24px;
+    bottom: 24px;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    font-size: 28px;
+    cursor: pointer;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+    z-index: 999;             /* 浮在内容之上 */
+}
+.ai-panel {
+    position: fixed;
+    right: 24px;
+    bottom: 96px;
+    width: 340px;
+    max-height: 70vh;
+    background: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+    display: none;            /* 默认隐藏，点开才显示 */
+    flex-direction: column;
+    overflow: hidden;
+    z-index: 999;
+}
+.ai-panel.open { display: flex; }  /* 加 .open 类就显示 */
+.ai-panel-header {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    padding: 14px 16px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.ai-panel-close { cursor: pointer; font-size: 20px; line-height: 1; }
+.ai-messages {
+    flex: 1;
+    overflow-y: auto;         /* 消息多了内部滚动 */
+    padding: 12px;
+    font-size: 14px;
+    line-height: 1.6;
+}
+.ai-msg { margin-bottom: 12px; padding: 10px 12px; border-radius: 10px; }
+.ai-msg.user  { background: #667eea; color: white; margin-left: 30px; }   /* 用户消息靠右、蓝底 */
+.ai-msg.bot   { background: #f1f1f5; color: #333; margin-right: 30px; }   /* 助手消息靠左、灰底 */
+.ai-citation  { font-size: 12px; color: #666; margin-top: 6px; }
+.ai-input-row { display: flex; border-top: 1px solid #eee; }
+.ai-input-row input { border: none; border-radius: 0; flex: 1; }
+.ai-input-row button {
+    width: auto;
+    padding: 0 18px;
+    border-radius: 0;
+    font-size: 15px;
+}
+.ai-loading { color: #999; font-style: italic; }

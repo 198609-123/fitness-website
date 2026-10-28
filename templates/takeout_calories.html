@@ -1,0 +1,43 @@
+{# takeout_calories.html —— 常见外卖热量查询页（继承母版） #}
+{# 数据来自 app.py 传入的 data 变量（读取 data/takeout.json） #}
+{% extends "base.html" %}
+
+{% block title %}常见外卖热量查询{% endblock %}
+
+{% block content %}
+<div class="container">
+    <header>
+        <a href="/" class="back-btn">← 返回首页</a>
+        <h1>🍔 常见外卖热量查询</h1>
+        <p>{{ data.intro }}</p>
+    </header>
+
+    {% for cat in data.categories %}
+    <div class="category">
+        <h2>{{ cat.emoji }} {{ cat.name }}</h2>
+        <div class="food-grid">
+            {% for item in cat.foods %}
+            <div class="food-card">
+                <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image">
+                <div class="food-info">
+                    <div class="food-name">{{ item.name }}</div>
+                    <div class="food-calories">{{ item.calories }} <span>大卡</span></div>
+                    <div class="food-note">{{ item.note }}</div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endfor %}
+
+    {# 外卖减脂小贴士：循环渲染 tips 列表 #}
+    <div class="tip-box">
+        <h3>💡 外卖减脂小贴士</h3>
+        <ul>
+            {% for tip in data.tips %}
+            <li>{{ tip }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+{% endblock %}

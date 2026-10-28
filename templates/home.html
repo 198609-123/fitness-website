@@ -1,0 +1,18 @@
+{# home.html —— 首页（继承母版 base.html） #}
+{% extends "base.html" %}
+
+{# 覆盖母版里的 title block，让浏览器标签显示自定义标题 #}
+{% block title %}减脂计算器 - 首页{% endblock %}
+
+{# 覆盖 content block，填入首页独有的“选择方案”内容 #}
+{% block content %}
+<div class="box">
+    <h1>减脂计算器</h1>
+    <p>选择你的减脂方案</p>
+    <!-- 这些按钮链接到各功能页；href 对应 app.py 里定义的路由 -->
+    <a href="/calculator?type=52" class="btn">5+2 断食法计算器</a>
+    <a href="/calculator?type=carbon" class="btn">碳循环减脂法计算器</a>
+    <a href="/food-calories" class="btn">🍎 常见食物卡路里查询</a>
+    <a href="/takeout-calories" class="btn">🍔 常见外卖热量查询</a>
+</div>
+{% endblock %}
