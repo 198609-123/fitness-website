@@ -1,0 +1,121 @@
+{# method.html —— 方法与数据：把每个数字的来源、误差和边界讲清楚 #}
+{% extends "base.html" %}
+
+{% block title %}方法与数据 · 减脂计算器{% endblock %}
+{% block body_class %}page-method{% endblock %}
+
+{% block content %}
+<main class="container method-page">
+    <header class="page-head">
+        <a href="/" class="back-btn">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+            </svg>
+            返回首页
+        </a>
+        <p class="eyebrow"><span class="eyebrow-dot"></span>方法与数据</p>
+        <h1>
+            <span class="head-icon">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+                    <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2Z"/>
+                </svg>
+            </span>
+            方法与数据
+        </h1>
+        <p class="page-intro">每个数字是怎么来的、误差有多大、什么人不能用——都在这一页。</p>
+        <p class="data-meta">最后更新 2026-11-04 · 本页不替代医疗建议</p>
+    </header>
+
+    <section class="method-section" id="formula">
+        <h2>一、热量是怎么算的</h2>
+        <p>基础代谢率（BMR）用 Mifflin-St Jeor 公式，它是目前减脂场景里较常用、误差相对可控的估算公式；每日总消耗（TDEE）= BMR × 活动系数。</p>
+        <div class="formula">
+            <p>男性：BMR = 10 × 体重(kg) + 6.25 × 身高(cm) − 5 × 年龄 + 5</p>
+            <p>女性：BMR = 10 × 体重(kg) + 6.25 × 身高(cm) − 5 × 年龄 − 161</p>
+            <p>TDEE = BMR × 活动系数</p>
+        </div>
+        <table class="method-table">
+            <thead><tr><th>活动水平</th><th>系数</th><th>判定标准</th></tr></thead>
+            <tbody>
+                <tr><td>久坐型</td><td>1.2</td><td>办公室工作，几乎不运动</td></tr>
+                <tr><td>轻度活动</td><td>1.375</td><td>每周 1–3 次轻运动</td></tr>
+                <tr><td>中度活动</td><td>1.55</td><td>每周 3–5 次训练</td></tr>
+                <tr><td>高度活动</td><td>1.725</td><td>每周 6–7 次训练或体力工作</td></tr>
+            </tbody>
+        </table>
+        <p class="method-caveat">公式是估算，不是测量。个体差异通常在 ±10% 左右；同样的体重，肌肉量高的人实际消耗会更高。</p>
+    </section>
+
+    <section class="method-section" id="plans">
+        <h2>二、两个方案怎么排</h2>
+        <h3>5+2 断食法</h3>
+        <ul>
+            <li>正常日：TDEE 上下浮动 100 大卡，不刻意制造大缺口。</li>
+            <li>断食日：按 TDEE 的 25% 估算，并夹在 500–600（女）/ 600–700（男）大卡之间。</li>
+            <li>安全线：女性 500、男性 600；推荐值不会低于安全线，避免把“最低值”当成目标。</li>
+            <li>断食日必须非连续，每周 2 天；出现头晕、心慌、异常乏力或暴食冲动，立即停止。</li>
+        </ul>
+        <h3>碳循环减脂法</h3>
+        <ul>
+            <li>蛋白质全程固定：1.8 / 2.0 / 2.2 g/kg 体重，按训练强度和保肌需求选。</li>
+            <li>脂肪：低碳日 1.2 g/kg、中碳日 1.0 g/kg、高碳日 0.8 g/kg。</li>
+            <li>碳水：低碳日 0.8 g/kg、中碳日 2.5 g/kg、高碳日 5.0 g/kg。</li>
+            <li>循环：3 低 + 1 中 + 1 高（5 天），或 4 低 + 2 中 + 1 高（7 天）。</li>
+            <li>换算：1g 蛋白质/碳水 ≈ 4 大卡，1g 脂肪 ≈ 9 大卡；7700 大卡 ≈ 1kg 脂肪。</li>
+        </ul>
+        <p class="method-caveat">蛋白质按总体重估算。BMI 很高的人，按目标体重或去脂体重计算更合适；有肾病等特殊情况请先咨询医生。</p>
+    </section>
+
+    <section class="method-section" id="data">
+        <h2>三、数据来源与误差</h2>
+        <ul>
+            <li>食物数据参考《中国食物成分表（第 6 版）》与常见包装标示，取常见值；每张卡会标注“每 100g / 每份”和“生重 / 熟重 / 即食”。</li>
+            <li>外卖数据按常见份量估算，不是门店官方数据；同一道菜不同门店可能差 20% 以上。</li>
+            <li>热量数字取整到个位，份量换算按克数比例计算，允许 ±1–2 大卡的舍入误差。</li>
+            <li>包装食品请以营养成分表为准；同一种食物生重与熟重差异很大，换算法见食物页的“常用份量换算”。</li>
+        </ul>
+        <p class="method-caveat">食物数据误差通常 ±10–20%，外卖更大。用这些数字做“相对比较”比做“精确记账”更可靠。</p>
+    </section>
+
+    <section class="method-section" id="plateau">
+        <h2>四、连续两周没变化怎么办</h2>
+        <ol>
+            <li>先确认是“晨起体重 7 天均值”连续 2 周不变，不是单日波动；水分、盐分、经期都会影响单日数字。</li>
+            <li>用新体重重算 BMR/TDEE，不要一直用刚开始的数字。</li>
+            <li>先加 1000–1500 步/天，观察 2 周；再考虑每天减 100–150 大卡。</li>
+            <li>不要把热量压到 BMR 以下；女性长期低于 1200、男性低于 1500 要特别谨慎。</li>
+            <li>检查记录是否漏记（饮料、酱料、坚果），以及睡眠、压力和训练量。</li>
+        </ol>
+        <p class="method-caveat">平台期不是“代谢坏了”。多数情况是消耗下降 + 记录偏差 + 水分波动叠加，先调整执行，再动热量。</p>
+    </section>
+
+    <section class="method-section" id="guides">
+        <h2>五、三篇 3 分钟短读</h2>
+
+        <h3>1. 缺口不是越大越好</h3>
+        <p>每天 500 大卡缺口大约对应每周 0.45kg 脂肪。缺口再大，体重掉得更快，但肌肉流失、疲劳、暴食反弹的风险也会上来。把速度控制在每周 0.5%–1% 体重，通常比“狠两周、崩三周”更划算。</p>
+
+        <h3>2. 蛋白质为什么重要</h3>
+        <p>减脂时身体会同时消耗脂肪和肌肉，蛋白质吃够、配合力量训练，能尽量把肌肉留住。常见范围是 1.6–2.2g/kg 体重，分到 3–4 餐；优先鸡胸、鱼虾、蛋、奶、豆制品，而不是把额度留给零食。</p>
+
+        <h3>3. 平台期不是“代谢坏了”</h3>
+        <p>体重下降后，基础消耗会变低，日常活动量也常不自觉减少；再加上记录偏差，缺口可能已经不存在。先按上一节“连续两周”的规则调整，不要一上来就把热量砍到极低。</p>
+    </section>
+
+    <section class="method-section" id="limits">
+        <h2>六、不适用人群</h2>
+        <p>以下情况不要使用本站的减脂方案，请先咨询医生或注册营养师：</p>
+        <ul>
+            <li>孕期或哺乳期</li>
+            <li>未满 18 岁</li>
+            <li>BMI 低于 18.5，或目标 BMI 低于 18.5</li>
+            <li>有进食障碍史（厌食、暴食、催吐等）</li>
+            <li>糖尿病、低血糖或其他需要控制饮食的慢性病</li>
+        </ul>
+        <p>本站不做疾病诊断，也不提供治疗方案；所有数字只用于健康管理参考。</p>
+    </section>
+
+    <p class="method-foot">发现数据错误或有改进建议，欢迎反馈；更新时会同步修改本页的“最后更新”日期。</p>
+</main>
+{% endblock %}

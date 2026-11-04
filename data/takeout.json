@@ -1,42 +1,212 @@
 {
-  "intro": "以下为常见外卖食物的卡路里参考值（按常见份量估算）",
+  "intro": "以下为常见外卖食物的热量参考值，按常见份量估算；不同门店差异较大。",
+  "source": "常见份量估算，非门店官方数据",
+  "updated_at": "2026-11-04",
   "categories": [
     {
       "name": "西式快餐",
       "emoji": "🍟",
       "foods": [
-        { "name": "汉堡", "calories": 500, "note": "约1个", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=hamburger%20with%20beef%20and%20vegetables&image_size=square" },
-        { "name": "薯条(中份)", "calories": 400, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=french%20fries%20golden%20crispy&image_size=square" },
-        { "name": "炸鸡(1块)", "calories": 250, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20chicken%20crispy%20golden&image_size=square" },
-        { "name": "披萨(1片)", "calories": 285, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pizza%20slice%20cheese%20pepperoni&image_size=square" }
+        {
+          "name": "汉堡",
+          "calories": 500,
+          "note": "约1个",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=hamburger%20with%20beef%20and%20vegetables&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1个",
+            "grams": 220,
+            "calories": 500
+          }
+        },
+        {
+          "name": "薯条(中份)",
+          "calories": 400,
+          "note": "约150g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=french%20fries%20golden%20crispy&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1份",
+            "grams": 150,
+            "calories": 400
+          }
+        },
+        {
+          "name": "炸鸡(1块)",
+          "calories": 250,
+          "note": "约100g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20chicken%20crispy%20golden&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1块",
+            "grams": 100,
+            "calories": 250
+          }
+        },
+        {
+          "name": "披萨(1片)",
+          "calories": 285,
+          "note": "约100g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pizza%20slice%20cheese%20pepperoni&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1片",
+            "grams": 100,
+            "calories": 285
+          }
+        }
       ]
     },
     {
       "name": "中式快餐",
       "emoji": "🍚",
       "foods": [
-        { "name": "蛋炒饭", "calories": 350, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20rice%20chinese%20food&image_size=square" },
-        { "name": "牛肉面", "calories": 450, "note": "约300g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese%20noodles%20beef%20tasty&image_size=square" },
-        { "name": "煎饺(6个)", "calories": 240, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20dumplings%20chinese%20food&image_size=square" },
-        { "name": "馄饨(10个)", "calories": 280, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=wonton%20soup%20chinese%20food&image_size=square" }
+        {
+          "name": "蛋炒饭",
+          "calories": 350,
+          "note": "约200g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20rice%20chinese%20food&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1份",
+            "grams": 200,
+            "calories": 350
+          }
+        },
+        {
+          "name": "牛肉面",
+          "calories": 450,
+          "note": "约300g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chinese%20noodles%20beef%20tasty&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1碗",
+            "grams": 300,
+            "calories": 450
+          }
+        },
+        {
+          "name": "煎饺(6个)",
+          "calories": 240,
+          "note": "约150g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20dumplings%20chinese%20food&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "6个",
+            "grams": 150,
+            "calories": 240
+          }
+        },
+        {
+          "name": "馄饨(10个)",
+          "calories": 280,
+          "note": "约200g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=wonton%20soup%20chinese%20food&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "10个",
+            "grams": 200,
+            "calories": 280
+          }
+        }
       ]
     },
     {
       "name": "日料寿司",
       "emoji": "🍣",
       "foods": [
-        { "name": "寿司(10个)", "calories": 300, "note": "约200g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sushi%20roll%20salmon%20fresh&image_size=square" },
-        { "name": "刺身拼盘", "calories": 200, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sashimi%20fresh%20fish&image_size=square" },
-        { "name": "天妇罗(5个)", "calories": 350, "note": "约150g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tempura%20shrimp%20fried&image_size=square" }
+        {
+          "name": "寿司(10个)",
+          "calories": 300,
+          "note": "约200g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sushi%20roll%20salmon%20fresh&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "10个",
+            "grams": 200,
+            "calories": 300
+          }
+        },
+        {
+          "name": "刺身拼盘",
+          "calories": 200,
+          "note": "约100g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sashimi%20fresh%20fish&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1份",
+            "grams": 100,
+            "calories": 200
+          }
+        },
+        {
+          "name": "天妇罗(5个)",
+          "calories": 350,
+          "note": "约150g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tempura%20shrimp%20fried&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "5个",
+            "grams": 150,
+            "calories": 350
+          }
+        }
       ]
     },
     {
       "name": "饮品甜品",
       "emoji": "🧋",
       "foods": [
-        { "name": "奶茶(中杯)", "calories": 350, "note": "约500ml", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20tea%20bubble%20tea%20cup&image_size=square" },
-        { "name": "可乐(中杯)", "calories": 180, "note": "约500ml", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cola%20drink%20glass&image_size=square" },
-        { "name": "冰淇淋(1球)", "calories": 150, "note": "约100g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ice%20cream%20cone%20sweet&image_size=square" }
+        {
+          "name": "奶茶(中杯)",
+          "calories": 350,
+          "note": "约500ml",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20tea%20bubble%20tea%20cup&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1杯",
+            "grams": 500,
+            "calories": 350
+          }
+        },
+        {
+          "name": "可乐(中杯)",
+          "calories": 180,
+          "note": "约500ml",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cola%20drink%20glass&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1杯",
+            "grams": 500,
+            "calories": 180
+          }
+        },
+        {
+          "name": "冰淇淋(1球)",
+          "calories": 150,
+          "note": "约100g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=ice%20cream%20cone%20sweet&image_size=square",
+          "basis": "per_serving",
+          "state": "ready",
+          "serving": {
+            "label": "1球",
+            "grams": 100,
+            "calories": 150
+          }
+        }
       ]
     }
   ],

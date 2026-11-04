@@ -1,0 +1,7 @@
+# .dockerignore —— 告诉 Docker「构建镜像时哪些文件别打进来」
+# 作用：别把本地虚拟环境、密钥(.env)、缓存、WorkBuddy 项目数据带进镜像（又大又泄密）
+
+.venv
+__pycache__
+.env
+.workbuddy

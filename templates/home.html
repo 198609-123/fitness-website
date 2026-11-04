@@ -2,17 +2,213 @@
 {% extends "base.html" %}
 
 {# 覆盖母版里的 title block，让浏览器标签显示自定义标题 #}
-{% block title %}减脂计算器 - 首页{% endblock %}
+{% block title %}减脂计算器 · 科学减脂不踩坑{% endblock %}
+{% block body_class %}page-home{% endblock %}
 
-{# 覆盖 content block，填入首页独有的“选择方案”内容 #}
+{# 覆盖 content block，填入首页独有的内容 #}
 {% block content %}
-<div class="box">
-    <h1>减脂计算器</h1>
-    <p>选择你的减脂方案</p>
-    <!-- 这些按钮链接到各功能页；href 对应 app.py 里定义的路由 -->
-    <a href="/calculator?type=52" class="btn">5+2 断食法计算器</a>
-    <a href="/calculator?type=carbon" class="btn">碳循环减脂法计算器</a>
-    <a href="/food-calories" class="btn">🍎 常见食物卡路里查询</a>
-    <a href="/takeout-calories" class="btn">🍔 常见外卖热量查询</a>
-</div>
+<main class="home">
+    <section class="box">
+
+        <!-- 品牌条：站点标记 + 名称，右侧一句话说明数据来源 -->
+        <div class="brandbar">
+            <a class="brand" href="/" aria-label="减脂计算器首页">
+                <span class="brand-mark">
+                    <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.4-.5-2-1-3-1.1-2.1-.2-4.1 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.2.4-2.3 1-3a2.5 2.5 0 0 0 2.5 2.5Z"/>
+                    </svg>
+                </span>
+                <span class="brand-name">减脂计算器</span>
+            </a>
+            <span class="brand-note">代谢公式 + 食物数据</span>
+        </div>
+
+        <!-- 今日概览：只有本机存过方案时才显示；显示后隐藏 hero，回访用户不必每次先看营销页 -->
+        <section class="dashboard" id="homeDash" hidden aria-label="今日概览">
+            <div class="dash-head">
+                <div>
+                    <p class="dash-date" id="dashDate"></p>
+                    <p class="dash-title">今天的目标 <strong id="dashTarget">—</strong> <span>大卡</span></p>
+                </div>
+                <a class="dash-plan" id="dashPlanLink" href="/calculator">重算方案</a>
+            </div>
+            <div class="dash-stats">
+                <div class="dash-stat"><span>已坚持</span><strong id="dashStreak">0</strong><em>天</em></div>
+                <div class="dash-stat"><span id="dashDeltaLabel">较起始</span><strong id="dashDelta">0</strong><em>kg</em></div>
+                <div class="dash-stat"><span>今日已记</span><strong id="dashUsed">0</strong><em>大卡</em></div>
+            </div>
+            <div class="dash-trend">
+                <div class="dash-trend-head"><span>近 7 天体重</span><span id="dashTrendHint"></span></div>
+                <div class="dash-chart" id="dashChart"></div>
+            </div>
+            <form class="checkin" id="checkinForm">
+                <label for="checkinWeight">今晨体重（kg）</label>
+                <input type="number" step="0.1" min="30" max="200" id="checkinWeight" placeholder="75.0" required>
+                <button type="submit">记录</button>
+            </form>
+            <p class="dash-milestone" id="dashMilestone" hidden></p>
+            <p class="dash-note"><a href="/food-calories">去记一笔</a> · 仅存本机 · <button type="button" class="link-btn" id="dashClear">清除数据</button></p>
+        </section>
+
+        <!-- Hero：真实食物摄影 + 主副标题 -->
+        <div class="hero" id="homeHero">
+            <figure class="hero-media">
+                <img src="/static/img/hero.jpg" alt="浅色台面上的高蛋白蔬菜谷物碗"
+                     width="1200" height="800" fetchpriority="high">
+            </figure>
+            <div class="hero-copy">
+                <p class="eyebrow"><span class="eyebrow-dot"></span>科学减脂 · 数据驱动</p>
+                <h1>热量算清楚，<br>减脂才不靠猜。</h1>
+                <p class="hero-sub">用数据说话，科学减脂不踩坑</p>
+            </div>
+        </div>
+
+        <!-- 30 秒小测：给“不知道选哪个”的人一个入口，推荐结果直接带 ?type= 跳计算器 -->
+        <details class="quiz" id="plan-quiz">
+            <summary class="quiz-summary">
+                <span class="quiz-title" id="quiz-title">30 秒选方案</span>
+                <span class="quiz-sub">不确定选哪个？回答三个问题</span>
+            </summary>
+            <div class="quiz-body">
+
+            <div class="quiz-q" role="group" aria-labelledby="q-training">
+                <p class="quiz-q-title" id="q-training">每周能稳定训练几次</p>
+                <div class="quiz-options">
+                    <label class="quiz-option"><input type="radio" name="training" value="low" checked><span>0–2 次</span></label>
+                    <label class="quiz-option"><input type="radio" name="training" value="mid"><span>3–4 次</span></label>
+                    <label class="quiz-option"><input type="radio" name="training" value="high"><span>5 次以上</span></label>
+                </div>
+            </div>
+
+            <div class="quiz-q" role="group" aria-labelledby="q-outing">
+                <p class="quiz-q-title" id="q-outing">每周外食或聚餐几次</p>
+                <div class="quiz-options">
+                    <label class="quiz-option"><input type="radio" name="outing" value="low" checked><span>很少</span></label>
+                    <label class="quiz-option"><input type="radio" name="outing" value="weekly"><span>每周几次</span></label>
+                    <label class="quiz-option"><input type="radio" name="outing" value="daily"><span>几乎每天</span></label>
+                </div>
+            </div>
+
+            <div class="quiz-q" role="group" aria-labelledby="q-fasting">
+                <p class="quiz-q-title" id="q-fasting">能接受每周两天明显降低热量吗</p>
+                <div class="quiz-options">
+                    <label class="quiz-option"><input type="radio" name="fasting" value="yes" checked><span>能</span></label>
+                    <label class="quiz-option"><input type="radio" name="fasting" value="unsure"><span>不确定</span></label>
+                    <label class="quiz-option"><input type="radio" name="fasting" value="no"><span>不能</span></label>
+                </div>
+            </div>
+
+            <button type="button" class="quiz-submit" id="quizSubmit">查看推荐</button>
+
+            <div class="quiz-result" id="quizResult" aria-live="polite" hidden>
+                <p class="quiz-label">推荐给你</p>
+                <h3 class="quiz-pick" id="quizPick">5+2 断食法</h3>
+                <p class="quiz-reason" id="quizReason"></p>
+                <a class="btn btn-primary quiz-cta" id="quizCta" href="/calculator?type=52">
+                    <span class="btn-body">
+                        <span class="btn-title">用 5+2 算我的热量</span>
+                        <span class="btn-desc">填 6 项数据，约 1 分钟</span>
+                    </span>
+                    <svg class="icon icon-sm btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                        <path d="m9 18 6-6-6-6"/>
+                    </svg>
+                </a>
+                <p class="quiz-alt" id="quizAlt"></p>
+            </div>
+            </div>
+        </details>
+
+        <!-- 四个入口分两组：方案（实心绿）/ 数据（描边绿），主次一眼可分 -->
+        <div class="actions">
+
+            <section class="group" aria-labelledby="group-plan">
+                <h2 class="group-title" id="group-plan">减脂方案</h2>
+                <div class="group-list">
+                    <!-- href 对应 app.py 里定义的路由，未做任何改动 -->
+                    <a href="/calculator?type=52" class="btn btn-primary">
+                        <span class="btn-icon">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <rect width="18" height="18" x="3" y="4" rx="2"/>
+                                <path d="M16 2v4"/><path d="M8 2v4"/><path d="M3 10h18"/><path d="m9 16 2 2 4-4"/>
+                            </svg>
+                        </span>
+                        <span class="btn-body">
+                            <span class="btn-title">5+2 断食法计算器</span>
+                            <span class="btn-desc">每周 5 天正常吃，2 天控制热量</span>
+                        </span>
+                        <svg class="icon icon-sm btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </a>
+
+                    <a href="/calculator?type=carbon" class="btn btn-primary">
+                        <span class="btn-icon">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="m17 2 4 4-4 4"/>
+                                <path d="M3 11v-1a4 4 0 0 1 4-4h14"/>
+                                <path d="m7 22-4-4 4-4"/>
+                                <path d="M21 13v1a4 4 0 0 1-4 4H3"/>
+                            </svg>
+                        </span>
+                        <span class="btn-body">
+                            <span class="btn-title">碳循环减脂法计算器</span>
+                            <span class="btn-desc">低中高碳日轮换，尽量保住肌肉</span>
+                        </span>
+                        <svg class="icon icon-sm btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+            <section class="group" aria-labelledby="group-food">
+                <h2 class="group-title" id="group-food">食物热量</h2>
+                <div class="group-list">
+                    <a href="/food-calories" class="btn btn-ghost">
+                        <span class="btn-icon">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M12 20.9c1.5 0 2.8 1.1 4 1.1 3 0 6-8 6-12.2A4.9 4.9 0 0 0 17 5c-2.2 0-4 1.4-5 2-1-.6-2.8-2-5-2a4.9 4.9 0 0 0-5 4.8C2 14 5 22 8 22c1.3 0 2.5-1.1 4-1.1Z"/>
+                                <path d="M10 2c1 .5 2 2 2 5"/>
+                            </svg>
+                        </span>
+                        <span class="btn-body">
+                            <span class="btn-title">常见食物卡路里查询</span>
+                            <span class="btn-desc">按 100g 生重参考值，分五类速查</span>
+                        </span>
+                        <svg class="icon icon-sm btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </a>
+
+                    <a href="/takeout-calories" class="btn btn-ghost">
+                        <span class="btn-icon">
+                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                                <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                                <path d="M7 2v20"/>
+                                <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                            </svg>
+                        </span>
+                        <span class="btn-body">
+                            <span class="btn-title">常见外卖热量查询</span>
+                            <span class="btn-desc">按常见份量估算，附点餐避坑建议</span>
+                        </span>
+                        <svg class="icon icon-sm btn-arrow" viewBox="0 0 24 24" aria-hidden="true">
+                            <path d="m9 18 6-6-6-6"/>
+                        </svg>
+                    </a>
+                </div>
+            </section>
+
+        </div>
+
+        <p class="site-foot"><a href="/method">方法与数据</a> · 结果基于 Mifflin-St Jeor 公式估算，仅供健康管理参考，不替代医疗建议。不适用于孕哺期、未满 18 岁、BMI &lt; 18.5 或有进食障碍史的人群。</p>
+    </section>
+</main>
+{% endblock %}
+
+{% block footer %}{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/local-state.js"></script>
+<script src="/static/js/plan-quiz.js"></script>
 {% endblock %}

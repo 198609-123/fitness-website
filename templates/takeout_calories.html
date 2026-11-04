@@ -2,42 +2,96 @@
 {# 数据来自 app.py 传入的 data 变量（读取 data/takeout.json） #}
 {% extends "base.html" %}
 
-{% block title %}常见外卖热量查询{% endblock %}
+{% block title %}常见外卖热量查询 · 减脂计算器{% endblock %}
+{% block body_class %}page-takeout{% endblock %}
 
 {% block content %}
-<div class="container">
-    <header>
-        <a href="/" class="back-btn">← 返回首页</a>
-        <h1>🍔 常见外卖热量查询</h1>
-        <p>{{ data.intro }}</p>
+{% set state_labels = {'raw': '生重', 'cooked': '熟重', 'ready': '即食'} %}
+<main class="container">
+    <header class="page-head">
+        <a href="/" class="back-btn">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+            </svg>
+            返回首页
+        </a>
+        <p class="eyebrow"><span class="eyebrow-dot"></span>外卖热量库</p>
+        <h1>
+            <span class="head-icon">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M3 2v7c0 1.1.9 2 2 2h4a2 2 0 0 0 2-2V2"/>
+                    <path d="M7 2v20"/>
+                    <path d="M21 15V2a5 5 0 0 0-5 5v6c0 1.1.9 2 2 2h3Zm0 0v7"/>
+                </svg>
+            </span>
+            常见外卖热量查询
+        </h1>
+        <p class="page-intro">{{ data.intro }}</p>
+        <p class="data-meta">{{ data.source }} · 更新于 {{ data.updated_at }}</p>
     </header>
 
+    <!-- 今日预算：由 local-state.js 按本机保存的方案渲染；无计划时给引导 -->
+    <section class="budget-bar" id="budgetBar" hidden aria-label="今日热量预算"></section>
+    <p class="budget-empty" id="budgetEmpty" hidden>还没有今日预算，<a href="/calculator">先算一次</a>，回来就能按剩余额度扣减。</p>
+
     {% for cat in data.categories %}
-    <div class="category">
-        <h2>{{ cat.emoji }} {{ cat.name }}</h2>
+    <section class="category">
+        <h2>{{ cat.name }}</h2>
         <div class="food-grid">
             {% for item in cat.foods %}
-            <div class="food-card">
-                <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image">
+            <article class="food-card"
+                     data-name="{{ item.name }}"
+                     data-note="{{ item.note }}"
+                     data-basis="{{ item.basis }}"
+                     data-calories="{{ item.calories }}">
+                <div class="food-media">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image" loading="lazy" decoding="async">
+                </div>
                 <div class="food-info">
                     <div class="food-name">{{ item.name }}</div>
-                    <div class="food-calories">{{ item.calories }} <span>大卡</span></div>
                     <div class="food-note">{{ item.note }}</div>
+                    <div class="food-calories">
+                        <span class="cal-value">{{ item.calories }}</span><span class="cal-unit">大卡/份</span>
+                    </div>
+                    <div class="food-calories-alt">
+                        <span>{{ state_labels.get(item.state, '') }}</span>
+                        <span>{{ item.serving.label }}{% if item.serving.grams %}（约{{ item.serving.grams }}g）{% endif %}</span>
+                    </div>
+                    <!-- 份量切换：按 0.5 / 1 / 1.5 倍更新本卡热量，不影响其他卡片 -->
+                    <label class="portion">
+                        <span>份量</span>
+                        <select class="portion-select" data-base-calories="{{ item.calories }}" aria-label="{{ item.name }}的份量">
+                            <option value="0.5">0.5 份</option>
+                            <option value="1" selected>1 份</option>
+                            <option value="1.5">1.5 份</option>
+                        </select>
+                    </label>
                 </div>
-            </div>
+            </article>
             {% endfor %}
         </div>
-    </div>
+    </section>
     {% endfor %}
 
     {# 外卖减脂小贴士：循环渲染 tips 列表 #}
     <div class="tip-box">
-        <h3>💡 外卖减脂小贴士</h3>
+        <h3>
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1 .2 2.2 1.5 3.5.8.8 1.3 1.5 1.5 2.5"/>
+                <path d="M9 18h6"/><path d="M10 22h4"/>
+            </svg>
+            外卖减脂小贴士
+        </h3>
         <ul>
             {% for tip in data.tips %}
             <li>{{ tip }}</li>
             {% endfor %}
         </ul>
     </div>
-</div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/local-state.js"></script>
+<script src="/static/js/food-search.js"></script>
 {% endblock %}

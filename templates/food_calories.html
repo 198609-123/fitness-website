@@ -2,38 +2,112 @@
 {# 数据来自 app.py 传入的 data 变量（它读取 data/foods.json），这里只用循环渲染 #}
 {% extends "base.html" %}
 
-{% block title %}常见食物卡路里查询{% endblock %}
+{% block title %}常见食物卡路里查询 · 减脂计算器{% endblock %}
+{% block body_class %}page-food{% endblock %}
 
 {% block content %}
-<div class="container">
-    <header>
+{% set total = data.categories | map(attribute='foods') | map('length') | sum %}
+{% set state_labels = {'raw': '生重', 'cooked': '熟重', 'ready': '即食'} %}
+<main class="container">
+    <header class="page-head">
         <!-- 返回首页链接统一用 .back-btn 样式（定义在 style.css） -->
-        <a href="/" class="back-btn">← 返回首页</a>
-        <h1>🍎 常见食物卡路里查询</h1>
-        <p>{{ data.intro }}</p>
+        <a href="/" class="back-btn">
+            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="m12 19-7-7 7-7"/><path d="M19 12H5"/>
+            </svg>
+            返回首页
+        </a>
+        <p class="eyebrow"><span class="eyebrow-dot"></span>食物热量库</p>
+        <h1>
+            <span class="head-icon">
+                <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M12 20.9c1.5 0 2.8 1.1 4 1.1 3 0 6-8 6-12.2A4.9 4.9 0 0 0 17 5c-2.2 0-4 1.4-5 2-1-.6-2.8-2-5-2a4.9 4.9 0 0 0-5 4.8C2 14 5 22 8 22c1.3 0 2.5-1.1 4-1.1Z"/>
+                    <path d="M10 2c1 .5 2 2 2 5"/>
+                </svg>
+            </span>
+            常见食物卡路里查询
+        </h1>
+        <p class="page-intro">{{ data.intro }}</p>
+        <p class="data-meta">{{ data.source }} · 更新于 {{ data.updated_at }}</p>
     </header>
+
+    <!-- 今日预算：由 local-state.js 按本机保存的方案渲染；无计划时给引导 -->
+    <section class="budget-bar" id="budgetBar" hidden aria-label="今日热量预算"></section>
+    <p class="budget-empty" id="budgetEmpty" hidden>还没有今日预算，<a href="/calculator">先算一次</a>，回来就能按剩余额度扣减。</p>
+
+    <!-- 检索与口径切换：纯前端过滤，不改服务端渲染；禁用 JS 时仍显示全部卡片 -->
+    <section class="toolbar" aria-label="食物筛选">
+        <div class="search-field">
+            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/>
+            </svg>
+            <input type="search" id="foodSearch" placeholder="搜索食物，例如：鸡胸、米饭"
+                   aria-label="搜索食物" autocomplete="off">
+        </div>
+        <div class="unit-toggle" role="group" aria-label="热量口径">
+            <button type="button" class="is-active" data-basis="per_100g" aria-pressed="true">按 100g</button>
+            <button type="button" data-basis="per_serving" aria-pressed="false">按份</button>
+        </div>
+    </section>
+    <p class="search-meta" id="searchMeta">共 {{ total }} 种食物</p>
+    <p class="search-empty" id="searchEmpty" hidden>没有找到匹配的食物，换个关键词试试。</p>
+
+    <details class="conversion">
+        <summary>常用份量换算</summary>
+        <ul>
+            <li>1 碗米饭 ≈ 150g（195 大卡）</li>
+            <li>1 个鸡蛋 ≈ 50g（72 大卡）</li>
+            <li>1 杯牛奶 ≈ 250ml（135 大卡）</li>
+            <li>1 个苹果 ≈ 180g（94 大卡）</li>
+            <li>1 片全麦面包 ≈ 35g（91 大卡）</li>
+        </ul>
+    </details>
 
     {# 外层循环：遍历每个分类（主食类 / 蛋白质类 / 蔬菜类 ...） #}
     {% for cat in data.categories %}
-    <div class="category">
-        <h2>{{ cat.emoji }} {{ cat.name }}</h2>
+    <section class="category">
+        <h2>{{ cat.name }}</h2>
         <div class="food-grid">
             {# 内层循环：遍历该分类下的每种食物。
                这里用 cat.foods 而非 cat.items —— 因为 Python 字典自带 .items() 方法，
                Jinja 的“点语法”会优先取方法而不是我们的数据键，会报错。
                所以 JSON 里这个键特意叫 "foods" 来避开冲突。 #}
             {% for item in cat.foods %}
-            <div class="food-card">
-                <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image">
+            <article class="food-card"
+                     data-name="{{ item.name }}"
+                     data-note="{{ item.note }}"
+                     data-basis="{{ item.basis }}"
+                     data-calories="{{ item.calories }}"
+                     {% if item.serving %}data-serving-calories="{{ item.serving.calories }}"{% endif %}>
+                <div class="food-media">
+                    <img src="{{ item.image }}" alt="{{ item.name }}" class="food-image" loading="lazy" decoding="async">
+                </div>
                 <div class="food-info">
                     <div class="food-name">{{ item.name }}</div>
-                    <div class="food-calories">{{ item.calories }} <span>大卡</span></div>
                     <div class="food-note">{{ item.note }}</div>
+                    <div class="food-calories">
+                        <span class="cal-value">{{ item.calories }}</span><span class="cal-unit">大卡/100g</span>
+                    </div>
+                    {% if item.serving %}
+                    <div class="food-calories-alt">
+                        <span>{{ state_labels.get(item.state, '') }}</span>
+                        <span>{{ item.serving.label }}{% if item.serving.grams %}（{{ item.serving.grams }}g）{% endif %}</span>
+                        <span>{{ item.serving.calories }} 大卡</span>
+                    </div>
+                    {% endif %}
+                    {% if item.macros and item.macros.protein_g %}
+                    <div class="food-macro">蛋白质 {{ item.macros.protein_g }}g / 100g</div>
+                    {% endif %}
                 </div>
-            </div>
+            </article>
             {% endfor %}
         </div>
-    </div>
+    </section>
     {% endfor %}
-</div>
+</main>
+{% endblock %}
+
+{% block scripts %}
+<script src="/static/js/local-state.js"></script>
+<script src="/static/js/food-search.js"></script>
 {% endblock %}

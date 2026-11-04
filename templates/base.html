@@ -2,46 +2,79 @@
 <!--
   base.html —— 母版模板（所有页面的“骨架”）
   ------------------------------------------------------------------
-  作用（对应你列的“优先级 3：没有母版模板”）：
-    之前每个页面都手动写 <head>、<style>、返回首页链接，重复且难维护。
-    现在把【公共部分】抽到这里，其他页面用 Jinja 的 extends 语法继承它，
-    只填自己独有的内容（通过 block 占位）。
-
-  为什么这对“接 AI 助手”特别关键：
-    把 AI 助手的浮动窗口写进这个母版，全站每个页面就自动带上它，
-    以后要改助手样式/逻辑，只改这里一处即可。
+  视觉层重构：这里只负责 <head> 的品牌闭环（字体 / favicon）、
+  AI 助手浮窗结构，以及给子页面留内容占位。颜色与间距全部在 style.css。
 -->
 <html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#F8FAFC">
+    <meta name="description" content="减脂计算器：用 Mifflin-St Jeor 公式估算热量，配合食物与外卖热量数据，做可执行的减脂计划。">
+
     <!-- title 用 block 占位，子页面可覆盖；不覆盖就用默认文字 -->
     <title>{% block title %}减脂计算器{% endblock %}</title>
+
+    <!-- 品牌闭环：SVG favicon（叶子标记，和站内 logo 同源） -->
+    <link rel="icon" type="image/svg+xml" href="/static/img/favicon.svg">
+
+    <!-- 字体：标题 Noto Sans SC 700，正文 300/500，数字 Manrope -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@500;700&family=Noto+Sans+SC:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
     <!-- 唯一一份公共样式，全站引用这一个文件 -->
     <link rel="stylesheet" href="/static/css/style.css">
     <!-- 子页面如果要在 head 里加自己的东西（如内联脚本），用这个 block -->
     {% block head %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
     <!-- ===== 页面正文：每个子页面用自己的内容替换这个 block ===== -->
     {% block content %}{% endblock %}
 
+    <!-- 全站页脚：方法与数据入口；首页在自己的卡片里已有页脚，会覆盖这个 block -->
+    {% block footer %}
+    <footer class="global-foot">
+        <a href="/method">方法与数据</a>
+        <span class="global-foot-sep">·</span>
+        <span>仅供健康管理参考，不替代医疗建议</span>
+    </footer>
+    {% endblock %}
+
     <!-- ===== 全站 AI 助手浮动组件（写在母版里，每个页面自动拥有） ===== -->
-    <!-- 右下角圆形按钮，点一下展开聊天面板 -->
-    <button class="ai-fab" id="aiFab" title="AI 减脂助手">💬</button>
+    <!-- 右下角圆形按钮：线性图标 message-circle，点一下展开聊天面板 -->
+    <button class="ai-fab" id="aiFab" type="button" title="AI 减脂助手"
+            aria-label="打开 AI 减脂助手" aria-expanded="false" aria-controls="aiPanel">
+        <svg class="icon icon-lg" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M7.9 20A9 9 0 1 0 4 16.1L2 22Z"/>
+        </svg>
+    </button>
 
     <!-- 聊天面板：默认隐藏（CSS 里 display:none），点按钮后由 JS 加 .open 显示 -->
-    <div class="ai-panel" id="aiPanel">
+    <div class="ai-panel" id="aiPanel" role="dialog" aria-label="AI 减脂助手">
         <div class="ai-panel-header">
-            <span>🤖 AI 减脂助手</span>
-            <span class="ai-panel-close" id="aiClose">&times;</span>
+            <span class="ai-panel-title">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3Z"/>
+                </svg>
+                AI 减脂助手
+            </span>
+            <button class="ai-panel-close" id="aiClose" type="button" aria-label="关闭助手面板">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M18 6 6 18"/><path d="m6 6 12 12"/>
+                </svg>
+            </button>
         </div>
         <div class="ai-messages" id="aiMessages">
-            <div class="ai-msg bot">你好！我是基于健身文献知识库的 AI 助手，问我减脂、增肌、饮食相关问题都可以～</div>
+            <div class="ai-msg bot">你好，我是基于健身与营养文献知识库的 AI 助手。减脂、增肌、饮食搭配的问题都可以问我。</div>
         </div>
         <div class="ai-input-row">
-            <input type="text" id="aiInput" placeholder="例如：减肥每天该吃多少蛋白质？" />
-            <button id="aiSend">发送</button>
+            <input type="text" id="aiInput" placeholder="例如：减脂每天该吃多少蛋白质？" aria-label="输入你的问题">
+            <button id="aiSend" type="button" aria-label="发送问题">
+                <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/>
+                </svg>
+            </button>
         </div>
     </div>
 

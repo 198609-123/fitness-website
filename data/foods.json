@@ -1,57 +1,266 @@
 {
-  "intro": "以下为 100 克食物的卡路里参考值（生重为主，详见每个卡片的备注）",
+  "intro": "以下为常见食物的热量参考值。默认按每 100g 标注；有常见份量的另列「1 份」估算，生熟状态写在卡片上。",
+  "source": "参考《中国食物成分表（第6版）》与常见包装标示，取常见值",
+  "updated_at": "2026-11-04",
   "categories": [
     {
       "name": "主食类",
       "emoji": "🍚",
       "foods": [
-        { "name": "米饭", "calories": 130, "note": "熟米饭", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=white%20rice%20in%20bowl%20asian%20food&image_size=square" },
-        { "name": "燕麦", "calories": 389, "note": "干燕麦片", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=oatmeal%20porridge%20healthy%20breakfast&image_size=square" },
-        { "name": "糙米", "calories": 348, "note": "生糙米", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=brown%20rice%20in%20bowl%20healthy&image_size=square" },
-        { "name": "红薯", "calories": 86, "note": "生红薯", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sweet%20potato%20orange%20vegetable&image_size=square" },
-        { "name": "全麦面包", "calories": 260, "note": "一片约35g", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=whole%20wheat%20bread%20slice&image_size=square" }
+        {
+          "name": "米饭",
+          "calories": 130,
+          "note": "熟米饭",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=white%20rice%20in%20bowl%20asian%20food&image_size=square",
+          "basis": "per_100g",
+          "state": "cooked",
+          "serving": { "label": "1碗", "grams": 150, "calories": 195 },
+          "macros": { "protein_g": 2.6 }
+        },
+        {
+          "name": "燕麦",
+          "calories": 389,
+          "note": "干燕麦片",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=oatmeal%20porridge%20healthy%20breakfast&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份", "grams": 40, "calories": 156 },
+          "macros": { "protein_g": 16.9 }
+        },
+        {
+          "name": "糙米",
+          "calories": 348,
+          "note": "生糙米",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=brown%20rice%20in%20bowl%20healthy&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份生米", "grams": 50, "calories": 174 },
+          "macros": { "protein_g": 7.7 }
+        },
+        {
+          "name": "红薯",
+          "calories": 86,
+          "note": "生红薯",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sweet%20potato%20orange%20vegetable&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1个", "grams": 200, "calories": 172 },
+          "macros": { "protein_g": 1.6 }
+        },
+        {
+          "name": "全麦面包",
+          "calories": 260,
+          "note": "每100g；1片约35g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=whole%20wheat%20bread%20slice&image_size=square",
+          "basis": "per_100g",
+          "state": "ready",
+          "serving": { "label": "1片", "grams": 35, "calories": 91 },
+          "macros": { "protein_g": 10.0 }
+        }
       ]
     },
     {
       "name": "蛋白质类",
       "emoji": "🥩",
       "foods": [
-        { "name": "鸡胸肉", "calories": 165, "note": "生鸡胸", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chicken%20breast%20grilled%20meat&image_size=square" },
-        { "name": "瘦牛肉", "calories": 125, "note": "生牛肉", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=beef%20steak%20raw%20meat&image_size=square" },
-        { "name": "三文鱼", "calories": 208, "note": "生鱼片", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fresh%20salmon%20fish%20fillet&image_size=square" },
-        { "name": "鸡蛋", "calories": 143, "note": "中等大小", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=eggs%20in%20basket%20fresh&image_size=square" },
-        { "name": "牛奶", "calories": 54, "note": "低脂牛奶", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20glass%20white%20healthy&image_size=square" }
+        {
+          "name": "鸡胸肉",
+          "calories": 120,
+          "note": "生重；熟重约165/100g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=chicken%20breast%20grilled%20meat&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1块", "grams": 150, "calories": 180 },
+          "macros": { "protein_g": 22.5 }
+        },
+        {
+          "name": "瘦牛肉",
+          "calories": 125,
+          "note": "生牛肉",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=beef%20steak%20raw%20meat&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份", "grams": 100, "calories": 125 },
+          "macros": { "protein_g": 20.2 }
+        },
+        {
+          "name": "三文鱼",
+          "calories": 208,
+          "note": "生鱼片",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fresh%20salmon%20fish%20fillet&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份", "grams": 100, "calories": 208 },
+          "macros": { "protein_g": 20.4 }
+        },
+        {
+          "name": "鸡蛋",
+          "calories": 143,
+          "note": "每100g；1个约50g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=eggs%20in%20basket%20fresh&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1个", "grams": 50, "calories": 72 },
+          "macros": { "protein_g": 12.6 }
+        },
+        {
+          "name": "牛奶",
+          "calories": 54,
+          "note": "低脂牛奶",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20glass%20white%20healthy&image_size=square",
+          "basis": "per_100g",
+          "state": "ready",
+          "serving": { "label": "1杯", "grams": 250, "calories": 135 },
+          "macros": { "protein_g": 3.4 }
+        }
       ]
     },
     {
       "name": "蔬菜类",
       "emoji": "🥬",
       "foods": [
-        { "name": "菠菜", "calories": 23, "note": "新鲜菠菜", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=spinach%20leaves%20fresh%20green&image_size=square" },
-        { "name": "西兰花", "calories": 34, "note": "新鲜西兰花", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=broccoli%20green%20vegetable&image_size=square" },
-        { "name": "黄瓜", "calories": 16, "note": "新鲜黄瓜", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cucumber%20fresh%20green&image_size=square" },
-        { "name": "番茄", "calories": 18, "note": "新鲜番茄", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tomato%20red%20fresh&image_size=square" },
-        { "name": "胡萝卜", "calories": 41, "note": "新鲜胡萝卜", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=carrot%20orange%20vegetable&image_size=square" }
+        {
+          "name": "菠菜",
+          "calories": 23,
+          "note": "新鲜菠菜",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=spinach%20leaves%20fresh%20green&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1把", "grams": 200, "calories": 46 },
+          "macros": { "protein_g": 2.9 }
+        },
+        {
+          "name": "西兰花",
+          "calories": 34,
+          "note": "新鲜西兰花",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=broccoli%20green%20vegetable&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份", "grams": 200, "calories": 68 },
+          "macros": { "protein_g": 2.8 }
+        },
+        {
+          "name": "黄瓜",
+          "calories": 16,
+          "note": "新鲜黄瓜",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cucumber%20fresh%20green&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1根", "grams": 200, "calories": 32 },
+          "macros": { "protein_g": 0.7 }
+        },
+        {
+          "name": "番茄",
+          "calories": 18,
+          "note": "新鲜番茄",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tomato%20red%20fresh&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1个", "grams": 150, "calories": 27 },
+          "macros": { "protein_g": 0.9 }
+        },
+        {
+          "name": "胡萝卜",
+          "calories": 41,
+          "note": "新鲜胡萝卜",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=carrot%20orange%20vegetable&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1根", "grams": 100, "calories": 41 },
+          "macros": { "protein_g": 0.9 }
+        }
       ]
     },
     {
       "name": "水果类",
       "emoji": "🍎",
       "foods": [
-        { "name": "苹果", "calories": 52, "note": "中等大小", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=apple%20red%20fresh&image_size=square" },
-        { "name": "香蕉", "calories": 91, "note": "中等大小", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=banana%20yellow%20fresh&image_size=square" },
-        { "name": "橙子", "calories": 47, "note": "中等大小", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=orange%20citrus%20fruit&image_size=square" },
-        { "name": "柚子", "calories": 42, "note": "新鲜柚子", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=grapefruit%20citrus%20fruit&image_size=square" },
-        { "name": "草莓", "calories": 32, "note": "新鲜草莓", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=strawberries%20red%20fresh&image_size=square" }
+        {
+          "name": "苹果",
+          "calories": 52,
+          "note": "每100g；1个约180g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=apple%20red%20fresh&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1个", "grams": 180, "calories": 94 },
+          "macros": { "protein_g": 0.3 }
+        },
+        {
+          "name": "香蕉",
+          "calories": 91,
+          "note": "每100g；1根约120g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=banana%20yellow%20fresh&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1根", "grams": 120, "calories": 109 },
+          "macros": { "protein_g": 1.1 }
+        },
+        {
+          "name": "橙子",
+          "calories": 47,
+          "note": "每100g；1个约150g",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=orange%20citrus%20fruit&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1个", "grams": 150, "calories": 71 },
+          "macros": { "protein_g": 0.9 }
+        },
+        {
+          "name": "柚子",
+          "calories": 42,
+          "note": "新鲜柚子",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=grapefruit%20citrus%20fruit&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1瓣", "grams": 100, "calories": 42 },
+          "macros": { "protein_g": 0.8 }
+        },
+        {
+          "name": "草莓",
+          "calories": 32,
+          "note": "新鲜草莓",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=strawberries%20red%20fresh&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1份", "grams": 100, "calories": 32 },
+          "macros": { "protein_g": 0.7 }
+        }
       ]
     },
     {
       "name": "坚果类",
       "emoji": "🥜",
       "foods": [
-        { "name": "杏仁", "calories": 575, "note": "约23颗", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=almonds%20nuts%20healthy&image_size=square" },
-        { "name": "核桃", "calories": 654, "note": "约2个", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=walnuts%20nuts%20healthy&image_size=square" },
-        { "name": "花生", "calories": 567, "note": "生花生", "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=peanuts%20nuts%20healthy&image_size=square" }
+        {
+          "name": "杏仁",
+          "calories": 575,
+          "note": "每100g；约23颗",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=almonds%20nuts%20healthy&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "23颗", "grams": 28, "calories": 161 },
+          "macros": { "protein_g": 21.2 }
+        },
+        {
+          "name": "核桃",
+          "calories": 654,
+          "note": "每100g；约2个",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=walnuts%20nuts%20healthy&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "2个", "grams": 10, "calories": 65 },
+          "macros": { "protein_g": 15.2 }
+        },
+        {
+          "name": "花生",
+          "calories": 567,
+          "note": "生花生",
+          "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=peanuts%20nuts%20healthy&image_size=square",
+          "basis": "per_100g",
+          "state": "raw",
+          "serving": { "label": "1把", "grams": 30, "calories": 170 },
+          "macros": { "protein_g": 25.8 }
+        }
       ]
     }
   ]
