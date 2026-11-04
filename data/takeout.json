@@ -183,15 +183,15 @@
         },
         {
           "name": "可乐(中杯)",
-          "calories": 180,
-          "note": "约500ml",
+          "calories": 215,
+          "note": "约500ml；按 43 大卡/100ml 计",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=cola%20drink%20glass&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1杯",
             "grams": 500,
-            "calories": 180
+            "calories": 215
           }
         },
         {
