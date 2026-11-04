@@ -536,15 +536,19 @@
             });
         }
 
-        var clearButton = document.getElementById("dashClear");
-        if (clearButton) {
-            clearButton.addEventListener("click", function () {
-                if (!window.confirm("会清除本机的方案、今日预算和体重记录，确定吗？")) return;
-                remove(KEYS.plan);
-                remove(KEYS.today);
-                remove(KEYS.log);
-                window.location.reload();
-            });
+        // 两个入口共用同一套清除逻辑：顶部的“不是我的数据？”和底部的“清除数据”。
+        // 共用设备时，第二个人看到的第一个问题就是“这是谁的数据”，所以顶部那个更显眼。
+        function clearAll() {
+            if (!window.confirm("会清除这台设备上的方案、今日预算和体重记录，确定吗？")) return;
+            remove(KEYS.plan);
+            remove(KEYS.today);
+            remove(KEYS.log);
+            window.location.reload();
         }
+
+        ["dashClearTop", "dashClear"].forEach(function (id) {
+            var button = document.getElementById(id);
+            if (button) button.addEventListener("click", clearAll);
+        });
     }
 })();

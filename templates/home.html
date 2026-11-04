@@ -25,6 +25,13 @@
 
         <!-- 今日概览：只有本机存过方案时才显示；显示后隐藏 hero，回访用户不必每次先看营销页 -->
         <section class="dashboard" id="homeDash" hidden aria-label="今日概览">
+            <!-- 共用设备上，第二个人一打开就会看到上一个人的目标与体重。
+                 这条提示放在最上方，而不是藏在底部小字里。 -->
+            <p class="dash-local">
+                <span class="dash-local-tag">仅存本机</span>
+                <span>数据只在这台设备的浏览器里，换人使用请先清除。</span>
+                <button type="button" class="dash-local-btn" id="dashClearTop">不是我的数据？</button>
+            </p>
             <div class="dash-head">
                 <div>
                     <p class="dash-date" id="dashDate"></p>
@@ -47,7 +54,7 @@
                 <button type="submit">记录</button>
             </form>
             <p class="dash-milestone" id="dashMilestone" hidden></p>
-            <p class="dash-note"><a href="/food-calories">去记一笔</a> · 仅存本机 · <button type="button" class="link-btn" id="dashClear">清除数据</button></p>
+            <p class="dash-note"><a href="/food-calories">去记一笔</a></p>
         </section>
 
         <!-- Hero：真实食物摄影 + 主副标题 -->

@@ -195,6 +195,13 @@ class TestPages(SiteTestCase):
         self.assertEqual(takeout.count('class="food-card"'), 14)
         self.assertEqual(takeout.count("portion-select"), 14)
 
+    def test_home_tells_users_data_is_local(self):
+        """共用设备上，第二个打开的人必须一眼看到“仅存本机”和清除入口。"""
+        home = self.client.get("/").get_data(as_text=True)
+        self.assertIn("仅存本机", home)
+        self.assertIn('id="dashClearTop"', home)
+        self.assertIn("不是我的数据", home)
+
     def test_variants_render_on_cards(self):
         """多种可能对应的食物，卡片里必须能看到“其他情况”，而不是只留一个值。"""
         food = self.client.get("/food-calories").get_data(as_text=True)
