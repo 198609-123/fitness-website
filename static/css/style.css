@@ -891,6 +891,74 @@ img {
     color: var(--brand-deep);
 }
 
+/* 卡片内的“其他情况”：默认收起，点开才展开，避免小卡片被撑高 */
+.food-variants {
+    margin-top: 8px;
+    font-size: 12px;
+    line-height: 1.6;
+    color: var(--sub);
+}
+
+.food-variants > summary {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    cursor: pointer;
+    color: var(--brand-deep);
+    border-bottom: 1px dashed rgba(4, 120, 87, .3);
+    list-style: none;
+}
+
+/* 收起三角在 Safari/Chrome 都去掉，改用下面这个方块自己画 */
+.food-variants > summary::-webkit-details-marker {
+    display: none;
+}
+
+.food-variants > summary::before {
+    content: "+";
+    display: inline-block;
+    width: 12px;
+    font-weight: 600;
+    text-align: center;
+}
+
+.food-variants[open] > summary::before {
+    content: "−";
+}
+
+.food-variants > summary:hover {
+    border-bottom-color: var(--brand);
+}
+
+.food-variants ul {
+    margin-top: 6px;
+    padding: 8px 10px;
+    background: var(--surface-2);
+    border-radius: var(--r-sm);
+}
+
+.food-variants li {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 2px 0;
+}
+
+.food-variants li + li {
+    border-top: 1px solid var(--line);
+}
+
+.variant-label {
+    color: var(--ink-2);
+}
+
+.variant-cal {
+    flex: none;
+    font-family: var(--font-num);
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
+
 /* 外卖页每卡的份量选择：只更新本卡热量 */
 .portion {
     display: flex;

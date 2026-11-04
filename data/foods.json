@@ -40,12 +40,22 @@
         {
           "name": "红薯",
           "calories": 61,
-          "note": "生红薯（红心品种）",
+          "note": "生红薯；主值按红心品种",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sweet%20potato%20orange%20vegetable&image_size=square",
           "basis": "per_100g",
           "state": "raw",
           "serving": { "label": "1个", "grams": 200, "calories": 122 },
-          "macros": { "protein_g": 1.6 }
+          "macros": { "protein_g": 1.6 },
+          "variants": [
+            {
+              "label": "白心",
+              "calories": 106
+            },
+            {
+              "label": "紫薯",
+              "calories": 116
+            }
+          ]
         },
         {
           "name": "全麦面包",
@@ -91,7 +101,13 @@
           "basis": "per_100g",
           "state": "raw",
           "serving": { "label": "1份", "grams": 100, "calories": 139 },
-          "macros": { "protein_g": 20.4 }
+          "macros": { "protein_g": 20.4 },
+          "variants": [
+            {
+              "label": "养殖大西洋鲑（USDA）",
+              "calories": 208
+            }
+          ]
         },
         {
           "name": "鸡蛋",
@@ -101,17 +117,37 @@
           "basis": "per_100g",
           "state": "raw",
           "serving": { "label": "1个", "grams": 50, "calories": 72 },
-          "macros": { "protein_g": 12.6 }
+          "macros": { "protein_g": 12.6 },
+          "variants": [
+            {
+              "label": "蛋清",
+              "calories": 60
+            },
+            {
+              "label": "蛋黄",
+              "calories": 328
+            }
+          ]
         },
         {
           "name": "牛奶",
           "calories": 43,
-          "note": "低脂牛奶",
+          "note": "主值按低脂；全脂/脱脂见其他情况",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=milk%20glass%20white%20healthy&image_size=square",
           "basis": "per_100g",
           "state": "ready",
           "serving": { "label": "1杯", "grams": 250, "calories": 108 },
-          "macros": { "protein_g": 3.4 }
+          "macros": { "protein_g": 3.4 },
+          "variants": [
+            {
+              "label": "全脂",
+              "calories": 54
+            },
+            {
+              "label": "脱脂",
+              "calories": 33
+            }
+          ]
         }
       ]
     },
@@ -259,7 +295,13 @@
           "basis": "per_100g",
           "state": "raw",
           "serving": { "label": "1把", "grams": 30, "calories": 172 },
-          "macros": { "protein_g": 25.8 }
+          "macros": { "protein_g": 25.8 },
+          "variants": [
+            {
+              "label": "炒花生",
+              "calories": 601
+            }
+          ]
         }
       ]
     }

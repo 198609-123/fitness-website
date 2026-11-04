@@ -98,6 +98,18 @@
                     {% if item.macros and item.macros.protein_g %}
                     <div class="food-macro">蛋白质 {{ item.macros.protein_g }}g / 100g</div>
                     {% endif %}
+                    {# 成分表里同一名称可能对应多个条目（红薯分红心/白心、牛奶分全脂/脱脂），
+                       与其只给一个值，不如把其他情况折叠进卡片，用户按自己吃的品种对号入座。 #}
+                    {% if item.variants %}
+                    <details class="food-variants">
+                        <summary>其他情况（每 100g）</summary>
+                        <ul>
+                            {% for v in item.variants %}
+                            <li><span class="variant-label">{{ v.label }}</span><span class="variant-cal">{{ v.calories }} 大卡</span></li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    {% endif %}
                 </div>
             </article>
             {% endfor %}

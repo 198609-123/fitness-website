@@ -1,6 +1,6 @@
 {
   "intro": "以下为常见外卖食物的热量参考值，按常见份量估算；不同门店差异较大。",
-  "source": "常见份量估算，非门店官方数据",
+  "source": "快餐与饮品按品牌官方营养数据（麦当劳中国、肯德基）；中式与日料按《中国食物成分表》及日本食品标准成分表；其余为常见份量估算",
   "updated_at": "2026-11-04",
   "categories": [
     {
@@ -9,54 +9,64 @@
       "foods": [
         {
           "name": "汉堡",
-          "calories": 500,
-          "note": "约1个",
+          "calories": 513,
+          "note": "约220g；按麦当劳巨无霸（2146 kJ）",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=hamburger%20with%20beef%20and%20vegetables&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1个",
             "grams": 220,
-            "calories": 500
+            "calories": 513
           }
         },
         {
           "name": "薯条(中份)",
-          "calories": 400,
-          "note": "约150g",
+          "calories": 289,
+          "note": "约115g；按麦当劳中薯（1210 kJ）",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=french%20fries%20golden%20crispy&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1份",
-            "grams": 150,
-            "calories": 400
-          }
+            "grams": 115,
+            "calories": 289
+          },
+          "variants": [
+            {
+              "label": "小份",
+              "calories": 210
+            },
+            {
+              "label": "大份",
+              "calories": 379
+            }
+          ]
         },
         {
           "name": "炸鸡(1块)",
-          "calories": 250,
-          "note": "约100g",
+          "calories": 242,
+          "note": "约87g；按肯德基吮指原味鸡（1013 kJ）",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20chicken%20crispy%20golden&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1块",
-            "grams": 100,
-            "calories": 250
+            "grams": 87,
+            "calories": 242
           }
         },
         {
           "name": "披萨(1片)",
-          "calories": 285,
-          "note": "约100g",
+          "calories": 235,
+          "note": "约100g；按成分表「比萨饼」235/100g",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=pizza%20slice%20cheese%20pepperoni&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1片",
             "grams": 100,
-            "calories": 285
+            "calories": 235
           }
         }
       ]
@@ -67,15 +77,15 @@
       "foods": [
         {
           "name": "蛋炒饭",
-          "calories": 350,
-          "note": "约200g",
+          "calories": 376,
+          "note": "约200g；按什锦炒饭 188/100g",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20rice%20chinese%20food&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1份",
             "grams": 200,
-            "calories": 350
+            "calories": 376
           }
         },
         {
@@ -93,15 +103,15 @@
         },
         {
           "name": "煎饺(6个)",
-          "calories": 240,
-          "note": "约150g",
+          "calories": 300,
+          "note": "约150g；按锅贴 200/100g",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=fried%20dumplings%20chinese%20food&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "6个",
             "grams": 150,
-            "calories": 240
+            "calories": 300
           }
         },
         {
@@ -125,41 +135,41 @@
       "foods": [
         {
           "name": "寿司(10个)",
-          "calories": 300,
-          "note": "约200g",
+          "calories": 340,
+          "note": "约200g；按握寿司 170/100g",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sushi%20roll%20salmon%20fresh&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "10个",
             "grams": 200,
-            "calories": 300
+            "calories": 340
           }
         },
         {
           "name": "刺身拼盘",
-          "calories": 200,
-          "note": "约100g",
+          "calories": 150,
+          "note": "约100g；三文鱼刺身 139、白身鱼 100–130",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=sashimi%20fresh%20fish&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "1份",
             "grams": 100,
-            "calories": 200
+            "calories": 150
           }
         },
         {
           "name": "天妇罗(5个)",
-          "calories": 350,
-          "note": "约150g",
+          "calories": 285,
+          "note": "约150g；按炸虾天妇罗 190/100g",
           "image": "https://trae-api-cn.mchost.guru/api/ide/v1/text_to_image?prompt=tempura%20shrimp%20fried&image_size=square",
           "basis": "per_serving",
           "state": "ready",
           "serving": {
             "label": "5个",
             "grams": 150,
-            "calories": 350
+            "calories": 285
           }
         }
       ]

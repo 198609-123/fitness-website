@@ -57,6 +57,17 @@
                         <span>{{ state_labels.get(item.state, '') }}</span>
                         <span>{{ item.serving.label }}{% if item.serving.grams %}（约{{ item.serving.grams }}g）{% endif %}</span>
                     </div>
+                    {# 不同份量的官方数据：中份是主值，小份/大份折叠在这里 #}
+                    {% if item.variants %}
+                    <details class="food-variants">
+                        <summary>其他份量</summary>
+                        <ul>
+                            {% for v in item.variants %}
+                            <li><span class="variant-label">{{ v.label }}</span><span class="variant-cal">{{ v.calories }} 大卡</span></li>
+                            {% endfor %}
+                        </ul>
+                    </details>
+                    {% endif %}
                     <!-- 份量切换：按 0.5 / 1 / 1.5 倍更新本卡热量，不影响其他卡片 -->
                     <label class="portion">
                         <span>份量</span>

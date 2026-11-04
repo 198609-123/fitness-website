@@ -195,6 +195,18 @@ class TestPages(SiteTestCase):
         self.assertEqual(takeout.count('class="food-card"'), 14)
         self.assertEqual(takeout.count("portion-select"), 14)
 
+    def test_variants_render_on_cards(self):
+        """多种可能对应的食物，卡片里必须能看到“其他情况”，而不是只留一个值。"""
+        food = self.client.get("/food-calories").get_data(as_text=True)
+        self.assertEqual(food.count('class="food-variants"'), 5)
+        for label in ("红心", "白心", "紫薯", "全脂", "脱脂", "蛋清", "蛋黄", "炒花生"):
+            self.assertIn(label, food)
+
+        takeout = self.client.get("/takeout-calories").get_data(as_text=True)
+        self.assertIn("其他份量", takeout)
+        self.assertIn("小份", takeout)
+        self.assertIn("大份", takeout)
+
 
 class TestApiCalculate(SiteTestCase):
     def test_plan_52_keys(self):
@@ -342,6 +354,19 @@ class TestDataFiles(unittest.TestCase):
             with self.subTest(name=item["name"]):
                 self.assertEqual(item["basis"], "per_serving")
                 self.assertEqual(item["serving"]["calories"], item["calories"])
+
+    def test_variants_are_well_formed(self):
+        """“其他情况”会被直接渲染到页面上，字段缺失会让卡片出现空行。"""
+        for name in ("foods.json", "takeout.json"):
+            data = self.load(name)
+            for cat in data["categories"]:
+                for item in cat["foods"]:
+                    for variant in item.get("variants") or []:
+                        with self.subTest(food=item["name"], variant=variant.get("label")):
+                            self.assertIsInstance(variant.get("label"), str)
+                            self.assertTrue(variant["label"].strip())
+                            self.assertIsInstance(variant.get("calories"), int)
+                            self.assertGreater(variant["calories"], 0)
 
 
 if __name__ == "__main__":
