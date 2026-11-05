@@ -1,0 +1,30 @@
+# Fly.io 部署配置 —— 减脂网站（前端 + 接口）
+app = "fitness-website"
+primary_region = "nrt"        # 与 RAG 同区域，内部通信快
+
+[build]
+  dockerfile = "Dockerfile"    # 用项目根目录的 Dockerfile 造镜像（gunicorn 启动 Flask）
+
+[env]
+  # 指向线上 RAG 服务的 /ask 接口（公开地址，不含密钥，明文安全）。
+  # 网站 AI 助手会把问题转发到这里，由云端 RAG 回答——这就是两个项目“接起来”的那根线。
+  RAG_SERVICE_URL = "https://fitness-rag.fly.dev/ask"
+
+[http_service]
+  internal_port = 5000         # 容器内 gunicorn 监听的端口（必须和 Dockerfile 一致）
+  force_https = true
+  auto_stop_machines = false
+  auto_start_machines = true
+  min_machines_running = 1     # ⚠️ 保持常驻，手机随时打开不用等冷启动
+
+  [[http_service.http_checks]]
+    path = "/health"
+    interval = "15s"
+    timeout = "5s"
+    grace_period = "30s"
+    method = "get"
+
+[[vm]]
+  cpu_kind = "shared"
+  cpus = 1
+  memory_mb = 256             # 减脂网站很轻，256MB 足够
